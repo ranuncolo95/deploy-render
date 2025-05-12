@@ -1,0 +1,4 @@
+langdetect
+textblob
+fastapi[standard]
+uvicorn
