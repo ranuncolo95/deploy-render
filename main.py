@@ -1,5 +1,7 @@
 from fastapi import FastAPI 
 from langdetect import detect
+from textblob import TextBlob
+
 
 app = FastAPI()
 @app.get("/")
@@ -44,6 +46,23 @@ def delete_user(username : str):
 
 #NEW API EX1
 
-@app.get("/es1")
+@app.get("/lang-detect")
 def check_language(text: str):
     return f"La lingua rilevata è: {detect(text)}"
+
+
+@app.get("/sentiment-detect")
+def check_sentiment(text: str):
+    blob = TextBlob(text)
+    sentiment = blob.sentiment.polarity
+        
+    # Se sentiment > 0 allora -> positivo
+    # Se sentiment < 0 allora -> negativo
+    # Se sentiment = 0 allora -> neutro
+    
+    if sentiment > 0:
+        return "Il sentiment è positivo"
+    elif sentiment < 0:
+        return "Il sentiment è negativo"
+    else:
+        return "Il sentiment è neutrale"
